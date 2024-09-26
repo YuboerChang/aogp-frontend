@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/home";
-import goldPriceHistory from "@/views/goldPriceHistory.vue";
+import gpHistory from "@/views/gp-history.vue";
 
 let routes = [
   {
@@ -9,9 +9,9 @@ let routes = [
     component: Home,
     children: [
       {
-        path: "/goldPriceHistory",
-        name: "goldPriceHistory",
-        component: goldPriceHistory,
+        path: "/gpHistory",
+        name: "gpHistory",
+        component: gpHistory,
       },
     ],
   },

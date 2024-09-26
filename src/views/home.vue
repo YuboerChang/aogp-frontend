@@ -39,11 +39,9 @@ export default {
     },
   },
   mounted() {
-    if (true) {
-      this.$router.push({
-        name: "",
-      });
-    }
+    this.$router.push({
+      name: "gpHistory",
+    });
   },
   setup() {},
 };
