@@ -9,11 +9,13 @@
     ></el-button>
   </div>
 
-  <GPHistoryList></GPHistoryList>
+  <GPHistoryList ref="gpHistoryList"></GPHistoryList>
 </template>
 <script>
 import GPHistoryList from "@/components/gp-history-list";
 import DatePicker from "@/components/date-picker";
+import { post } from "@/api/api";
+import { toFormatDateString } from "@/util/util";
 
 export default {
   components: {
@@ -30,13 +32,27 @@ export default {
   created() {
     this.endDate = new Date();
     this.startDate = new Date();
-    this.startDate.setFullYear(this.startDate.getFullYear() - 1);
+    this.startDate.setMonth(this.startDate.getMonth() - 3);
     this.initDate = [this.startDate, this.endDate];
   },
   methods: {
-    query() {
-      console.log("startDate:", this.startDate);
-      console.log("endDate:", this.endDate);
+    async query() {
+      await post(
+        "/api/queryGoldPrice",
+        {
+          startDate: toFormatDateString(this.startDate),
+          endDate: toFormatDateString(this.endDate),
+        },
+        {}
+      ).then((res) => {
+        let xArr = [];
+        let yArr = [];
+        res.goldPriceList.forEach((element) => {
+          xArr.push(element.date);
+          yArr.push(element.close);
+        });
+        this.$refs.gpHistoryList.createOption(xArr, yArr);
+      });
     },
     handleDateChange(dates) {
       this.startDate = dates[0];
@@ -45,7 +61,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .search-box {
   display: flex;
   align-items: center;

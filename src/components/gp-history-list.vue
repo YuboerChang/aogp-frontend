@@ -39,11 +39,9 @@ export default {
   mounted() {
     this.chartDom = this.$refs.main;
     this.chartInstance = echarts.init(this.chartDom);
-    this.createOption();
-    this.chartInstance.setOption(this.option);
   },
   methods: {
-    createOption() {
+    createOption(xData, yData) {
       this.option = {
         title: {
           text: "Distribution of Electricity",
@@ -65,7 +63,7 @@ export default {
           type: "category",
           boundaryGap: false,
           // prettier-ignore
-          data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
+          data: xData
         },
         yAxis: {
           type: "value",
@@ -111,7 +109,7 @@ export default {
             type: "line",
             smooth: true,
             // prettier-ignore
-            data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
+            data: yData,
             markArea: {
               itemStyle: {
                 color: "rgba(255, 173, 177, 0.4)",
@@ -140,6 +138,7 @@ export default {
           },
         ],
       };
+      this.chartInstance.setOption(this.option);
     },
   },
 };
