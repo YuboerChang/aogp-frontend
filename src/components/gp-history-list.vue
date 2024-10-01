@@ -41,11 +41,11 @@ export default {
     this.chartInstance = echarts.init(this.chartDom);
   },
   methods: {
-    createOption(xData, yData) {
+    createOption(xData, yData, markXAxis, markColor) {
       this.option = {
         title: {
-          text: "Distribution of Electricity",
-          subtext: "Fake Data",
+          text: "黄金历史价格分析",
+          subtext: "Au99.99",
         },
         tooltip: {
           trigger: "axis",
@@ -62,78 +62,35 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          // prettier-ignore
-          data: xData
+          data: xData,
         },
         yAxis: {
           type: "value",
+          scale: true,
           axisLabel: {
-            formatter: "{value} W",
+            formatter: "{value} 元",
           },
           axisPointer: {
             snap: true,
           },
         },
-        visualMap: {
-          show: false,
-          dimension: 0,
-          pieces: [
-            {
-              lte: 6,
-              color: "green",
-            },
-            {
-              gt: 6,
-              lte: 8,
-              color: "red",
-            },
-            {
-              gt: 8,
-              lte: 14,
-              color: "green",
-            },
-            {
-              gt: 14,
-              lte: 17,
-              color: "red",
-            },
-            {
-              gt: 17,
-              color: "green",
-            },
-          ],
-        },
         series: [
           {
-            name: "Electricity",
+            name: "GoldPrice",
             type: "line",
             smooth: true,
-            // prettier-ignore
             data: yData,
+            lineStyle: {
+              color: "green",
+            },
+            itemStyle: {
+              color: "green",
+            },
             markArea: {
               itemStyle: {
-                color: "rgba(255, 173, 177, 0.4)",
+                color: markColor,
               },
-              data: [
-                [
-                  {
-                    name: "Morning Peak",
-                    xAxis: "07:30",
-                  },
-                  {
-                    xAxis: "10:00",
-                  },
-                ],
-                [
-                  {
-                    name: "Evening Peak",
-                    xAxis: "17:30",
-                  },
-                  {
-                    xAxis: "21:15",
-                  },
-                ],
-              ],
+              data: markXAxis,
             },
           },
         ],
@@ -145,7 +102,8 @@ export default {
 </script>
 <style>
 .list {
-  height: 400px;
-  width: 800px;
+  height: 500px;
+  width: 1000px;
+  margin-left: 100px;
 }
 </style>

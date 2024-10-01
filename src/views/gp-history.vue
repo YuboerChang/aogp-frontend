@@ -4,7 +4,15 @@
       :initDate="initDate"
       @handleDateChange="handleDateChange"
     ></DatePicker>
-    <el-button type="primary" circle class="button-box" @click="query"
+    <el-radio-group
+      class="general-box"
+      v-model="markChoose"
+      @change="handleMarkChoose"
+    >
+      <el-radio-button label="峰值" value="chooseTop" />
+      <el-radio-button label="谷值" value="chooseValley" />
+    </el-radio-group>
+    <el-button type="primary" circle class="general-box" @click="query"
       ><el-icon><Search /></el-icon
     ></el-button>
   </div>
@@ -27,6 +35,12 @@ export default {
       endDate: null,
       startDate: null,
       initDate: null,
+      markChoose: "chooseTop",
+      topExtreme: [],
+      valleyExtreme: [],
+      markColor: "#fae5e5",
+      xArr: [],
+      yArr: [],
     };
   },
   created() {
@@ -34,6 +48,9 @@ export default {
     this.startDate = new Date();
     this.startDate.setMonth(this.startDate.getMonth() - 3);
     this.initDate = [this.startDate, this.endDate];
+  },
+  mounted() {
+    this.query();
   },
   methods: {
     async query() {
@@ -45,18 +62,50 @@ export default {
         },
         {}
       ).then((res) => {
-        let xArr = [];
-        let yArr = [];
+        this.xArr = [];
+        this.yArr = [];
         res.goldPriceList.forEach((element) => {
-          xArr.push(element.date);
-          yArr.push(element.close);
+          this.xArr.push(element.date);
+          this.yArr.push(element.close);
         });
-        this.$refs.gpHistoryList.createOption(xArr, yArr);
+        this.topExtreme = [];
+        this.valleyExtreme = [];
+        res.extremeList.forEach((element) => {
+          if (element.type == "TOP") {
+            this.topExtreme.push(element.interval);
+          } else {
+            this.valleyExtreme.push(element.interval);
+          }
+        });
+        this.$refs.gpHistoryList.createOption(
+          this.xArr,
+          this.yArr,
+          this.markChoose == "chooseTop" ? this.topExtreme : this.valleyExtreme,
+          this.markColor
+        );
       });
     },
     handleDateChange(dates) {
       this.startDate = dates[0];
       this.endDate = dates[1];
+    },
+    handleMarkChoose() {
+      let extreme = [];
+      if (this.markChoose == "chooseTop") {
+        extreme = this.topExtreme;
+        this.markColor = "#fae5e5";
+      } else {
+        extreme = this.valleyExtreme;
+        this.markColor = "#d4f3cb";
+      }
+      if (this.xArr.length != 0 && this.yArr.length != 0) {
+        this.$refs.gpHistoryList.createOption(
+          this.xArr,
+          this.yArr,
+          extreme,
+          this.markColor
+        );
+      }
     },
   },
 };
@@ -67,7 +116,7 @@ export default {
   align-items: center;
   margin-bottom: 50px;
 }
-.button-box {
+.general-box {
   margin-left: 100px;
 }
 </style>
