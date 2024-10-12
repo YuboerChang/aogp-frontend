@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/home";
-import gpHistory from "@/views/gp-history.vue";
+import gpHistory from "@/views/gp-history";
+import investmentAdvise from "@/views/investment-advise";
 
 let routes = [
   {
@@ -12,6 +13,11 @@ let routes = [
         path: "/gpHistory",
         name: "gpHistory",
         component: gpHistory,
+      },
+      {
+        path: "/investmentAdvise",
+        name: "investmentAdvise",
+        component: investmentAdvise,
       },
     ],
   },

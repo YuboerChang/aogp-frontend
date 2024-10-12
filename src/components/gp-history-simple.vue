@@ -4,29 +4,13 @@
 
 <script>
 import * as echarts from "echarts/core";
-import {
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  GridComponent,
-  VisualMapComponent,
-  MarkAreaComponent,
-} from "echarts/components";
+import { GridComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
+
 import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 
-echarts.use([
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  GridComponent,
-  VisualMapComponent,
-  MarkAreaComponent,
-  LineChart,
-  CanvasRenderer,
-  UniversalTransition,
-]);
+echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
 export default {
   data() {
@@ -41,59 +25,42 @@ export default {
     this.chartInstance = echarts.init(this.chartDom);
   },
   methods: {
-    createOption(xData, yData, markXAxis, markColor) {
+    createOption(xData, yData) {
       this.option = {
         title: {
-          text: "黄金历史价格",
-          subtext: "Au99.99",
+          text: "黄金价格列表",
+        },
+        grid: {
+          top: 80,
         },
         tooltip: {
           trigger: "item",
         },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        grid: {
-          top: 100,
-        },
         xAxis: {
           type: "category",
-          boundaryGap: false,
-          data: xData,
           name: "日期",
+          data: xData,
         },
         yAxis: {
           type: "value",
           scale: true,
           name: "黄金每日收盘价（元/克）",
           axisLabel: {
+            margin: 10,
             formatter: "{value}",
-          },
-          axisPointer: {
-            snap: true,
           },
         },
         series: [
           {
-            name: "黄金价格",
-            type: "line",
-            smooth: true,
             data: yData,
+            type: "line",
             lineStyle: {
-              color: "#66BB6A",
+              color: "#E57373",
             },
             itemStyle: {
-              color: "#43A047",
+              color: "#F44336",
             },
-            markArea: {
-              itemStyle: {
-                color: markColor,
-              },
-              data: markXAxis,
-            },
+            symbolSize: 20,
           },
         ],
       };
@@ -104,8 +71,8 @@ export default {
 </script>
 <style>
 .list {
-  height: 600px;
-  width: 1200px;
+  height: 500px;
+  width: 900px;
   margin-left: 100px;
 }
 </style>
