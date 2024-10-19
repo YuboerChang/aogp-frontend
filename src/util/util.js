@@ -1,3 +1,12 @@
+export function daysDiff(date1, date2) {
+  // 计算两个日期的差值，2减去1
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  const timeDiff = date2.getTime() - date1.getTime();
+  const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  return daysDiff;
+}
+
 export function toFormatDateString(date) {
   //日期转换为标准格式 yyyy-MM-dd 字符串
   const year = date.getFullYear();

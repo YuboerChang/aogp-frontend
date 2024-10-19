@@ -9,5 +9,10 @@ const menuListData = [
     name: "投资建议",
     path: "investmentAdvise",
   },
+  {
+    id: "3",
+    name: "收益试算",
+    path: "calculationProfit",
+  },
 ];
 export { menuListData };

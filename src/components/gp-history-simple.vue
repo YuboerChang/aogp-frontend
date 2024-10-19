@@ -69,10 +69,10 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .list {
-  height: 500px;
-  width: 900px;
-  margin-left: 100px;
+  height: 400px;
+  width: 800px;
+  margin-left: 200px;
 }
 </style>

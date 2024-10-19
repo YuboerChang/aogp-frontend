@@ -12,7 +12,7 @@
       <el-radio-button label="峰值" value="chooseTop" />
       <el-radio-button label="谷值" value="chooseValley" />
     </el-radio-group>
-    <el-button type="primary" circle class="general-box" @click="query"
+    <el-button type="primary" circle class="button-box" @click="query"
       ><el-icon><Search /></el-icon
     ></el-button>
   </div>
@@ -118,5 +118,11 @@ export default {
 }
 .general-box {
   margin-left: 100px;
+}
+.button-box {
+  margin-left: 300px;
+}
+.button-box:hover {
+  transform: scale(1.2);
 }
 </style>

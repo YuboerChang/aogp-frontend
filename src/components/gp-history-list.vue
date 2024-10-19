@@ -102,10 +102,10 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .list {
-  height: 600px;
-  width: 1200px;
-  margin-left: 100px;
+  height: 500px;
+  width: 1000px;
+  margin-left: 120px;
 }
 </style>
