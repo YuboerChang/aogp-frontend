@@ -106,6 +106,6 @@ export default {
 .list {
   height: 500px;
   width: 1000px;
-  margin-left: 120px;
+  margin-left: 80px;
 }
 </style>

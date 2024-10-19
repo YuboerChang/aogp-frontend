@@ -5,7 +5,7 @@
       @handleDateChange="handleDateChange"
     ></DatePicker>
     <el-radio-group
-      class="general-box"
+      class="radio-box"
       v-model="markChoose"
       @change="handleMarkChoose"
     >
@@ -114,13 +114,15 @@ export default {
 .search-box {
   display: flex;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  margin-left: 50px;
 }
-.general-box {
+.radio-box {
   margin-left: 100px;
 }
 .button-box {
   margin-left: 300px;
+  transition: all 0.5s;
 }
 .button-box:hover {
   transform: scale(1.2);

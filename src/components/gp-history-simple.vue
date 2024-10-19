@@ -71,8 +71,8 @@ export default {
 </script>
 <style scoped>
 .list {
-  height: 400px;
-  width: 800px;
-  margin-left: 200px;
+  height: 450px;
+  width: 920px;
+  margin-left: 120px;
 }
 </style>

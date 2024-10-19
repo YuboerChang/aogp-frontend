@@ -113,7 +113,7 @@ export default {
 </script>
 <style scoped>
 .advise-box {
-  margin: 10px 150px;
+  margin: 20px 150px;
   line-height: 30px;
 }
 .mark-data {

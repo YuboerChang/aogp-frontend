@@ -1,73 +1,75 @@
 <template>
-  <div>
-    <span class="item-box"
-      >购买日期：<el-date-picker
-        v-model="buyDate"
-        type="date"
-        @change="handleBuyDate"
-    /></span>
-    <span class="item-box"
-      >购买价格：<digitInput
-        v-model="buyPrice"
-        :isMoney="true"
-        :disabled="buyPriceDisable"
-      /> </span
-    ><span class="item-box"
-      >购买金额：<digitInput v-model="buyAmount" :isMoney="true"
-    /></span>
-  </div>
-  <div>
-    <span class="item-box"
-      >售出日期：<el-date-picker
-        v-model="sellDate"
-        type="date"
-        @change="handleSellDate"
-    /></span>
-    <span class="item-box"
-      >售出价格：<digitInput
-        v-model="sellPrice"
-        :isMoney="true"
-        :disabled="sellPriceDisable"
-    /></span>
-  </div>
-  <div>
-    <span class="item-box"
-      >手续费：<digitInput v-model="customFee" :isMoney="true" /></span
-    ><span class="item-box"
-      >手续费率（%）：<digitInput v-model="customRate" maxlength="4"
-    /></span>
-  </div>
-  <div class="button-div">
-    <el-button type="primary" @click="calculate" class="button-box"
-      >试算</el-button
-    >
-  </div>
-  <div>
-    收益试算：<br />
-    本次交易,基金共持有天数&nbsp;<span class="mark-data">{{ keepDays }}</span
-    >&nbsp;天，期间黄金价格变化&nbsp;<span class="mark-data">{{
-      priceDiff
-    }}</span
-    >&nbsp;元，变化比例为&nbsp;<span class="mark-data">{{ priceRatio }}</span
-    >&nbsp;%。
-    <br />
-    此次卖出金额共&nbsp;<span class="mark-data">{{ sellAmountTotal }}</span
-    >&nbsp;元，扣除手续费&nbsp;<span class="mark-data">{{ fee }}</span
-    >&nbsp;元（手续费率&nbsp;<span class="mark-data">{{ rate }}</span
-    >&nbsp;%），最终实际收益金额&nbsp;<span class="mark-data">{{
-      sellAmountActual
-    }}</span
-    >&nbsp;元，盈利&nbsp;<span class="mark-data">{{ profit }}</span
-    >&nbsp;元,盈利率&nbsp;<span class="mark-data">{{ profitRatio }}</span
-    >&nbsp;%。
-  </div>
-  <div class="warm-tip">
-    温馨提示<br />
-    1.&nbsp;如果是已经有确定价格的日期，价格以该日黄金实际收盘价为准，不允许自定义价格。<br />
-    2.&nbsp;手续费率或手续费可自定义，优先使用手续费，再使用手续费率，均为空时按照以下规则计算：<br />
-    &nbsp;&nbsp;(1)&nbsp;持有天数&lt;7天，费率1.5%<br />
-    &nbsp;&nbsp;(2)&nbsp;7天&lt;=持有天数&lt;30天，费率0.1% <br />
-    &nbsp;&nbsp;(3)&nbsp;30天&lt;=持有天数，费率0% <br />
+  <div class="general-box">
+    <div>
+      <span class="item-box"
+        >购买日期：<el-date-picker
+          v-model="buyDate"
+          type="date"
+          @change="handleBuyDate"
+      /></span>
+      <span class="item-box"
+        >购买价格：<digitInput
+          v-model="buyPrice"
+          :isMoney="true"
+          :disabled="buyPriceDisable"
+        /> </span
+      ><span class="item-box"
+        >购买金额：<digitInput v-model="buyAmount" :isMoney="true"
+      /></span>
+    </div>
+    <div>
+      <span class="item-box"
+        >售出日期：<el-date-picker
+          v-model="sellDate"
+          type="date"
+          @change="handleSellDate"
+      /></span>
+      <span class="item-box"
+        >售出价格：<digitInput
+          v-model="sellPrice"
+          :isMoney="true"
+          :disabled="sellPriceDisable"
+      /></span>
+    </div>
+    <div>
+      <span class="item-box"
+        >手续费：<digitInput v-model="customFee" :isMoney="true" /></span
+      ><span class="item-box"
+        >手续费率（%）：<digitInput v-model="customRate" maxlength="4"
+      /></span>
+    </div>
+    <div class="button-div">
+      <el-button type="primary" @click="calculate" class="button-box"
+        >试算</el-button
+      >
+    </div>
+    <div>
+      收益试算：<br />
+      本次交易,基金共持有天数&nbsp;<span class="mark-data">{{ keepDays }}</span
+      >&nbsp;天，期间黄金价格变化&nbsp;<span class="mark-data">{{
+        priceDiff
+      }}</span
+      >&nbsp;元，变化比例为&nbsp;<span class="mark-data">{{ priceRatio }}</span
+      >&nbsp;%。
+      <br />
+      此次卖出金额共&nbsp;<span class="mark-data">{{ sellAmountTotal }}</span
+      >&nbsp;元，扣除手续费&nbsp;<span class="mark-data">{{ fee }}</span
+      >&nbsp;元（手续费率&nbsp;<span class="mark-data">{{ rate }}</span
+      >&nbsp;%），最终实际收益金额&nbsp;<span class="mark-data">{{
+        sellAmountActual
+      }}</span
+      >&nbsp;元，盈利&nbsp;<span class="mark-data">{{ profit }}</span
+      >&nbsp;元,盈利率&nbsp;<span class="mark-data">{{ profitRatio }}</span
+      >&nbsp;%。
+    </div>
+    <div class="warm-tip">
+      温馨提示<br />
+      1.&nbsp;如果是已经有确定价格的日期，价格以该日黄金实际收盘价为准，不允许自定义价格。<br />
+      2.&nbsp;手续费率或手续费可自定义，优先使用手续费，再使用手续费率，均为空时按照以下规则计算：<br />
+      &nbsp;&nbsp;(1)&nbsp;持有天数&lt;7天，费率1.5%<br />
+      &nbsp;&nbsp;(2)&nbsp;7天&lt;=持有天数&lt;30天，费率0.1% <br />
+      &nbsp;&nbsp;(3)&nbsp;30天&lt;=持有天数，费率0% <br />
+    </div>
   </div>
 </template>
 <script>
@@ -189,6 +191,9 @@ export default {
 };
 </script>
 <style scoped>
+.general-box {
+  margin-left: 50px;
+}
 div {
   margin: 12px 0px;
 }
@@ -196,7 +201,7 @@ div {
   margin-right: 50px;
 }
 .warm-tip {
-  padding-top: 180px;
+  padding-top: 150px;
   font-size: 14px;
   color: #ff7043;
   line-height: 25px;
@@ -210,7 +215,7 @@ div {
   margin: 40px 0px 50px 0px;
 }
 .button-box {
-  width: 120px;
+  width: 100px;
   height: 50px;
   line-height: 50px;
   font-weight: bold;
@@ -218,6 +223,7 @@ div {
   border-radius: 30px;
   font-size: 18px;
   transition: all 0.5s;
+  margin: 10px 0px 20px -200px;
 }
 .button-box:hover {
   transform: scale(1.1);
